@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>My First HTML Document</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Appointments</h1>
+
+        <!-- Add Card-->
+        <button type="button" class="btn btn-dark mb-5" onclick="toggleCardAdd()">Add User</button>
+        <div class="card mb-2" id="my-card-add">
+            <div class="card-body">
+                <form id="add-form" method="POST" action="/Add" enctype="multipart/form-data">
+
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name">
+
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date">
+
+                    <label for="name">Time</label>
+                    <input type="time" id="time" name="time">
+
+                    <label for="image">Image</label>
+                    <input type="file" id="image" name="image">
+
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Update Card-->
+        <button type="button" class="btn btn-dark mb-5" onclick="toggleCard()">Update User</button>
+        <div class="card" id="my-card">
+            <div class="card-body">
+                <form id="update-form" method="POST" action="/update">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" id="id" name="id" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <input type="time" id="time" name="time" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update</button>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- Search Card-->
+        <button type="button" class="btn btn-dark mb-5" onclick="toggleSearchCard()">Search User</button>
+        <div class="card" id="search-card">
+            <div class="card-body">
+                <form id="search-form" method="POST" action="/search">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" id="id" name="id" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Search</button>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Reference Number</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td><img src="/static/{{row[4]}}" alt="Image" width="35" height="35"
+                                style="border-radius: 30px;"></td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+
+                        <td>
+                            <form id="delete-form" method="POST" action="/delete">
+                                <input type="text" id="id" name="id" value="{{row[0]}}" hidden>
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function toggleCard() {
+            var card = document.getElementById("my-card");
+            if (card.style.display === "none") {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        }
+
+        function toggleCardAdd() {
+            var card = document.getElementById("my-card-add");
+            if (card.style.display === "none") {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        }
+
+        function toggleSearchCard() {
+            var card = document.getElementById("search-card");
+            if (card.style.display === "none") {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
